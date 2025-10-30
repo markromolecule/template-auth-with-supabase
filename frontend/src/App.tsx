@@ -1,7 +1,7 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useAuthStore } from '@/stores/auth/use-auth-store';
-import { AuthLayout } from '@/components/auth/auth-layout';
-import { ProtectedRoute, AdminRoute } from '@/components/auth/protected-route';
+import { AuthLayout } from '@/components/features/auth/auth-layout';
+import { ProtectedRoute, AdminRoute } from '@/components/features/auth/routes/protected-route';
 import { Dashboard } from '@/pages/dashboard';
 import { AdminPanel } from '@/pages/admin-panel';
 import { AuthCallback } from '@/pages/auth-callback';

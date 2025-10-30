@@ -36,7 +36,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
             }
           } catch (error) {
             console.error('Failed to fetch profile:', error);
-            // Don't show error toast on initial load, might just be network issue
           }
         }
       } catch (error) {
@@ -65,28 +64,28 @@ export function AuthProvider({ children }: AuthProviderProps) {
         setLoading(true);
         try {
           const profile = await getProfileData({ userId: session.user.id });
-          setUser(profile);
-          toast.success('Successfully signed in!');
+            setUser(profile);
+            toast.success('Successfully signed in!');
         } catch (error) {
-          console.error('Failed to fetch profile after sign in:', error);
-          toast.error('Failed to load user profile');
+            console.error('Failed to fetch profile after sign in:', error);
+            toast.error('Failed to load user profile');
         } finally {
-          setLoading(false);
+            setLoading(false);
         }
       } else if (event === 'SIGNED_OUT') {
-        setUser(null);
-        setLoading(false);
-        toast.success('Successfully signed out!');
+          setUser(null);
+          setLoading(false);
+          toast.success('Successfully signed out!');
       } else if (event === 'TOKEN_REFRESHED') {
-        // Session was refreshed, user data should still be valid
-        console.log('Token refreshed');
+          // Session was refreshed, user data should still be valid
+          console.log('Token refreshed');
       } else if (event === 'USER_UPDATED' && session?.user) {
         // User data was updated, refresh profile
         try {
           const profile = await getProfileData({ userId: session.user.id });
-          setUser(profile);
+            setUser(profile);
         } catch (error) {
-          console.error('Failed to refresh profile after user update:', error);
+            console.error('Failed to refresh profile after user update:', error);
         }
       }
     });

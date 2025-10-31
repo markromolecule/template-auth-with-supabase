@@ -27,8 +27,18 @@ export async function oauthLoginData(args: OAuthProviderArgs) {
                 redirectTo: args.redirectTo || `${window.location.origin}/auth/callback`,
             },
         }
-    ); if (error) {
-        throw new Error(error.message); // TODO: Handle error
+    );
+    
+    if (error) {
+        throw new Error(error.message);
     }
+    
+    // Redirect to OAuth provider URL
+    if (data.url) {
+        window.location.href = data.url;
+    } else {
+        throw new Error('OAuth URL not provided');
+    }
+    
     return data;
 }

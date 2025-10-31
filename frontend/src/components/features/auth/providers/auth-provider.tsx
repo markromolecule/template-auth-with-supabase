@@ -13,6 +13,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   useEffect(() => {
     let mounted = true;
+    let isInitialized = false;
 
     // Get initial session
     const initializeAuth = async () => {
@@ -44,6 +45,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         if (mounted) {
           setLoading(false);
           setInitialized(true);
+          isInitialized = true;
         }
       }
     };
@@ -54,7 +56,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange(async (event, session) => {
-      console.log('Auth state changed:', event, session?.user?.id);
+      // Only log important auth events (skip INITIAL_SESSION and SIGNED_OUT during initialization)
+      if (event !== 'INITIAL_SESSION' && event !== 'SIGNED_OUT') {
+        console.log('Auth state changed:', event, session?.user?.id);
+      }
       
       if (!mounted) return;
 
@@ -73,9 +78,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
             setLoading(false);
         }
       } else if (event === 'SIGNED_OUT') {
+          // Only show toast if we're past initialization (real sign out, not initial state)
           setUser(null);
           setLoading(false);
-          toast.success('Successfully signed out!');
+          if (isInitialized) {
+            toast.success('Successfully signed out!');
+          }
       } else if (event === 'TOKEN_REFRESHED') {
           // Session was refreshed, user data should still be valid
           console.log('Token refreshed');

@@ -6,26 +6,33 @@ import { OAuthButtons } from './_components/oauth-buttons';
 import { PasswordInput } from './_components/password-input';
 import { Divider } from '@/components/ui/divider';
 import { useLoginForm } from '@/hooks/auth/use-auth-forms';
-import { cn } from '@/lib/utils';
 
 interface LoginFormProps {
   onSwitchToRegister?: () => void;
 }
 
 export function LoginForm({ onSwitchToRegister }: LoginFormProps) {
-  const { form, loginMutation, oauthMutation, handleOAuth, handleLogin } = useLoginForm();
+  const { 
+    form, 
+    loginMutation, 
+    oauthMutation, 
+    handleOAuth, 
+    handleLogin 
+  } = useLoginForm();
 
   return (
     <Card className="w-full max-w-md mx-auto">
+      {/* Header */}
       <CardHeader className="text-center">
         <CardTitle className="text-2xl font-semibold">Welcome back</CardTitle>
         <CardDescription>Sign in to your account to continue</CardDescription>
       </CardHeader>
+      
+      {/* Content */}
       <CardContent className="space-y-6">
-        <OAuthButtons onOAuthClick={handleOAuth} isLoading={oauthMutation.isPending} />
-        <Divider />
-
-        <form onSubmit={form.handleSubmit(handleLogin)} className="space-y-4">
+          {/* Login form */}
+          <form onSubmit={form.handleSubmit(handleLogin)} className="space-y-4">
+          {/* Email */}
           <div className="space-y-2">
             <Label htmlFor="email">Email</Label>
             <Input
@@ -33,13 +40,13 @@ export function LoginForm({ onSwitchToRegister }: LoginFormProps) {
               type="email"
               placeholder="Enter your email"
               {...form.register('email')}
-              className={cn(form.formState.errors.email && 'border-destructive')}
+              className={form.formState.errors.email ? 'border-destructive' : ''}
             />
             {form.formState.errors.email && (
               <p className="text-sm text-destructive">{form.formState.errors.email.message}</p>
             )}
           </div>
-
+          {/* Password */}
           <PasswordInput
             id="password"
             label="Password"
@@ -47,7 +54,7 @@ export function LoginForm({ onSwitchToRegister }: LoginFormProps) {
             register={form.register('password')}
             error={form.formState.errors.password?.message}
           />
-
+          {/* Submit button */}
           <Button
             type="submit"
             className="w-full"
@@ -56,7 +63,7 @@ export function LoginForm({ onSwitchToRegister }: LoginFormProps) {
             {loginMutation.isPending ? 'Signing in...' : 'Sign in'}
           </Button>
         </form>
-
+        {/* Sign up button */}
         <div className="text-center text-sm">
           <span className="text-muted-foreground">Don't have an account? </span>
           <Button 
@@ -67,6 +74,10 @@ export function LoginForm({ onSwitchToRegister }: LoginFormProps) {
             Sign up
           </Button>
         </div>
+        
+        <Divider />
+        {/* OAuth providers */}
+        <OAuthButtons onOAuthClick={handleOAuth} isLoading={oauthMutation.isPending} />
       </CardContent>
     </Card>
   );

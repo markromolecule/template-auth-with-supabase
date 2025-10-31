@@ -239,12 +239,12 @@ export function Dashboard() {
                   </p>
                   {user.role === 'user' && (
                     <p className="text-sm text-muted-foreground">
-                      💡 Contact an administrator if you need additional permissions or have questions about your account.
+                      Contact an administrator if you need additional permissions or have questions about your account.
                     </p>
                   )}
                   {(user.role === 'admin' || user.role === 'superadmin') && (
                     <p className="text-sm text-muted-foreground">
-                      🔧 As an administrator, you have access to the admin panel for managing users and system settings.
+                      As an administrator, you have access to the admin panel for managing users and system settings.
                     </p>
                   )}
                 </div>

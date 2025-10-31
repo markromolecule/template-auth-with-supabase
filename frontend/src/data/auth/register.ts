@@ -24,15 +24,40 @@ export async function registerData(args: RegisterDataArgs): Promise<RegisterData
         {
             email: args.email,
             password: args.password,
-            options: { // Handle options
-                data: { // Handle data
+            options: {
+                data: {
                     first_name: args.firstName,
                     last_name: args.lastName,
                 },
+                emailRedirectTo: `${window.location.origin}/auth/callback`,
             },
         }
-    ); if (error) {
-        throw new Error(error.message); // TODO: Handle error
+    ); 
+    
+    if (error) {
+        throw new Error(error.message);
     }    
-    return data; // TODO: Handle data
+    
+    // If user is created, create profile record
+    if (data.user) {
+        const { error: profileError } = await supabase
+            .from('profiles')
+            .insert({
+                id: data.user.id,
+                email: args.email,
+                first_name: args.firstName,
+                last_name: args.lastName,
+                avatar_url: '',
+                role: 'user',
+                created_at: new Date().toISOString(),
+                updated_at: new Date().toISOString(),
+            });
+
+        if (profileError) {
+            console.error('Failed to create profile:', profileError);
+            // Don't throw error as user is already created
+        }
+    }
+    
+    return data;
 }

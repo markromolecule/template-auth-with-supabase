@@ -1,5 +1,6 @@
 import { supabase } from '@/lib/supabase/supabase';
 import type { User, Session } from '@supabase/supabase-js';
+import { getCallbackUrl } from '@/constants/api';
 
 // Register Data
 export type RegisterDataArgs = {
@@ -29,7 +30,7 @@ export async function registerData(args: RegisterDataArgs): Promise<RegisterData
                     first_name: args.firstName,
                     last_name: args.lastName,
                 },
-                emailRedirectTo: `${window.location.origin}/auth/callback`,
+                emailRedirectTo: getCallbackUrl(),
             },
         }
     ); 

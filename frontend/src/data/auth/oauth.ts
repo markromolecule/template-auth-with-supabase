@@ -1,4 +1,5 @@
 import { supabase } from '@/lib/supabase/supabase';
+import { getCallbackUrl } from '@/constants/api';
 
 export type OAuthProvider = 'google' | 'facebook';
 
@@ -24,7 +25,7 @@ export async function oauthLoginData(args: OAuthProviderArgs) {
             provider: args.provider,
             options: {
                 // Callback URL
-                redirectTo: args.redirectTo || `${window.location.origin}/auth/callback`,
+                redirectTo: args.redirectTo || getCallbackUrl(),
             },
         }
     );

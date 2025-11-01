@@ -4,8 +4,12 @@ import { RegisterForm } from './register-form';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 
-export function AuthLayout() {
-  const [mode, setMode] = useState<'login' | 'register'>('login');
+interface AuthLayoutProps {
+  initialMode?: 'login' | 'register';
+}
+
+export function AuthLayout({ initialMode = 'login' }: AuthLayoutProps) {
+  const [mode, setMode] = useState<'login' | 'register'>(initialMode);
 
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4">

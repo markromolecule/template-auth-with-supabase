@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useLoginMutation } from '@/hooks/query/auth/use-login-mutation';
-import { useRegisterFunction } from '@/hooks/query/auth/use-register-mutation';
+import { useRegisterMutation } from '@/hooks/query/auth/use-register-mutation';
 import { useOAuthMutation } from '@/hooks/query/auth/use-oauth-mutation';
 import { loginSchema, registerSchema } from '@/schemas/auth-schemas';
 import type { LoginFormData, RegisterFormData } from '@/schemas/auth-schemas';
@@ -45,7 +45,7 @@ export function useLoginForm() {
 }
 
 export function useRegisterForm() {
-  const registerMutation = useRegisterFunction();
+  const registerMutation = useRegisterMutation();
   const oauthMutation = useOAuthMutation();
 
   const form = useForm<RegisterFormData>({

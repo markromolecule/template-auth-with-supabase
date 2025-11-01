@@ -12,10 +12,10 @@ export type UseRegisterMutationArgs = MutationOptions <
 >;
 
 // Register Mutation
-export function useRegisterFunction(args: UseRegisterMutationArgs = {}) {
+export function useRegisterMutation(args: UseRegisterMutationArgs = {}) {
     return useMutation({
         ...args,
-        mutationFn: registerData, // Handle mutation function
+        mutationFn: registerData,
         onSuccess: (data, variables, context, meta) => {
             if (args?.onSuccess)
                 return args.onSuccess(data, variables, context, meta);

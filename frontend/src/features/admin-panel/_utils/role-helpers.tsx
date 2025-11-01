@@ -1,6 +1,5 @@
 import { UserCog, Shield, Users, Crown } from 'lucide-react';
 import type { BadgeProps } from '@/components/ui/badge';
-import type { UserRole } from '@/stores/auth/auth.types';
 
 export function getRoleBadgeVariant(role: string): BadgeProps['variant'] {
   switch (role) {
